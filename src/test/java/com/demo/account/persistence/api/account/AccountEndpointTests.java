@@ -16,6 +16,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -94,5 +97,31 @@ public class AccountEndpointTests {
 		then( service ).should().find( user );
 		ErrorMessage errorMessage = mapper.readValue( result.getResponse().getContentAsString(), ErrorMessage.class );
 		assertThat( errorMessage ).isEqualTo( new ErrorMessage( "Account not found. User: user" ) );
+	}
+
+	/**
+	 * Calling endpoint to get all accounts.<br>
+	 * Positive test.
+	 */
+
+	@Test
+	public void valid_get_all_account() throws Exception {
+
+		// given
+		Account account1 = new Account( "user1", "name1" );
+		Account account2 = new Account( "user2", "name2" );
+		Account account3 = new Account( "user3", "name3" );
+		List<Account> accounts = Arrays.asList( account1, account2, account3 );
+		given( service.findAll() ).willReturn( accounts );
+
+		// when
+		//@formatter:off
+		MvcResult result = this.mockMvc.perform( get( "/account" ).contentType( MediaType.APPLICATION_JSON ) )
+			.andExpect( status().isOk() ).andReturn();
+		//@formatter:on
+
+		// then
+		then( service ).should().findAll();
+		assertThat( result.getResponse().getContentAsString() ).isEqualTo( mapper.writeValueAsString( accounts ) );
 	}
 }
