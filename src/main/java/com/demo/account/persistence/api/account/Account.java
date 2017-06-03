@@ -1,6 +1,8 @@
 package com.demo.account.persistence.api.account;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Account entity.
@@ -8,11 +10,13 @@ import lombok.*;
  * @author Hugo Costa
  * @since 1.0.0
  */
+@Document( collection = "accounts" )
 @Getter
 @EqualsAndHashCode( of = "user" )
 @RequiredArgsConstructor( access = AccessLevel.PACKAGE )
 public class Account {
 
+	@Id
 	@NonNull
 	private final String user;
 
