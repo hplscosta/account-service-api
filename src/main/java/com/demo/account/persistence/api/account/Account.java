@@ -1,9 +1,6 @@
 package com.demo.account.persistence.api.account;
 
-import com.demo.account.persistence.api.account.address.Address;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 
 /**
  * Account entity.
@@ -11,17 +8,20 @@ import lombok.Value;
  * @author Hugo Costa
  * @since 1.0.0
  */
-@Value
+@Getter
 @EqualsAndHashCode( of = "user" )
+@RequiredArgsConstructor( access = AccessLevel.PACKAGE )
 public class Account {
 
 	@NonNull
-	String user;
+	private final String user;
 
 	@NonNull
-	String name;
+	private final String name;
 
-	Integer age;
+	@Setter
+	private Integer age;
 
-	Address address;
+	@Setter
+	private Address address;
 }
