@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,22 +50,38 @@ public class AccountRepositoryTests {
 	}
 
 	/**
-	 * Find account in repository<br>
+	 * Find account by user in repository<br>
 	 * Positive test.
 	 */
 	@Test
 	@DirtiesContext
-	public void valid_find_account() {
+	public void valid_find_account_by_user() {
 
 		// given
 		Account account = new Account( "user", "name" );
 		repository.insert( account );
 
 		// when
-		Account accountLocated = repository.findOne( "user" );
+		Optional<Account> accountLocated = repository.findAccountByUser( "user" );
 
 		// then
-		assertThat( account ).isEqualToComparingFieldByField( accountLocated );
+		assertThat( accountLocated.isPresent() ).isTrue();
+		assertThat( account ).isEqualToComparingFieldByField( accountLocated.get() );
+	}
+
+	/**
+	 * Returns an Optional object empty when no account is found in repository<br>
+	 * Positive test.
+	 */
+	@Test
+	@DirtiesContext
+	public void valid_find_account_by_user_missing() {
+
+		// when
+		Optional<Account> accountLocated = repository.findAccountByUser( "user" );
+
+		// then
+		assertThat( accountLocated.isPresent() ).isFalse();
 	}
 
 	/**
