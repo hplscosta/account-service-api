@@ -1,7 +1,5 @@
 package com.demo.account.persistence.api.account;
 
-import com.demo.account.persistence.api.account.Account;
-import com.demo.account.persistence.api.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -10,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Account endpoint to access {@link Account} data. <br>
@@ -29,5 +29,10 @@ public class AccountEndpoint {
 	@GetMapping( path = "/{user}" )
 	public ResponseEntity<Account> get( @PathVariable String user ) {
 		return ResponseEntity.ok( service.find( user ) );
+	}
+
+	@GetMapping
+	public ResponseEntity<List<Account>> get() {
+		return ResponseEntity.ok( service.findAll() );
 	}
 }
