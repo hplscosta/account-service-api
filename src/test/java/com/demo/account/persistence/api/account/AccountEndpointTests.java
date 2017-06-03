@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -103,7 +104,6 @@ public class AccountEndpointTests {
 	 * Calling endpoint to get all accounts.<br>
 	 * Positive test.
 	 */
-
 	@Test
 	public void valid_get_all_account() throws Exception {
 
@@ -123,5 +123,56 @@ public class AccountEndpointTests {
 		// then
 		then( service ).should().findAll();
 		assertThat( result.getResponse().getContentAsString() ).isEqualTo( mapper.writeValueAsString( accounts ) );
+	}
+
+	/**
+	 * Calling endpoint to create account.<br>
+	 * Positive test.
+	 */
+	@Test
+	public void valid_create_account() throws Exception {
+
+		// given
+		Account account = new Account( "user", "name" );
+		given( service.insert( account ) ).willReturn( account );
+
+		// when
+		//@formatter:off
+		MvcResult result = this.mockMvc.perform( post( "/account" )
+													.content( mapper.writeValueAsString( account ) )
+													.contentType( MediaType.APPLICATION_JSON ) )
+			.andExpect( status().isCreated() ).andReturn();
+		//@formatter:on
+
+		// then
+		then( service ).should().insert( account );
+		Account accountInserted = mapper.readValue( result.getResponse().getContentAsString(), Account.class );
+		assertThat( accountInserted ).isEqualToComparingFieldByField( account );
+		assertThat( result.getResponse().getHeader( "Location" ) ).isEqualTo( "http://localhost/account/user" );
+	}
+
+	/**
+	 * Calling endpoint to save account. Request does not have mandatory fields. Must return an error message.<br>
+	 * Negative test.
+	 */
+	@Test
+	public void invalid_save_account_missing_mandatory_fields() throws Exception {
+
+		// given
+		Account account = new Account( "user", "name" );
+		given( service.insert( account ) ).willThrow( new IllegalArgumentException( "User cannot be empty." ) );
+
+		// when
+		//@formatter:off
+		MvcResult result = this.mockMvc.perform( post( "/account" )
+													.content( mapper.writeValueAsString( account ) )
+													.contentType( MediaType.APPLICATION_JSON ) )
+			.andExpect( status().isBadRequest() ).andReturn();
+		//@formatter:on
+
+		// then
+		then( service ).should().insert( account );
+		ErrorMessage errorMessage = mapper.readValue( result.getResponse().getContentAsString(), ErrorMessage.class );
+		assertThat( errorMessage ).isEqualTo( new ErrorMessage( "User cannot be empty." ) );
 	}
 }
