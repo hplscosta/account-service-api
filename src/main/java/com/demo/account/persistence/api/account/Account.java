@@ -17,10 +17,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Account {
 
 	@Id
-	@NonNull
 	private final String user;
 
-	@NonNull
 	private final String name;
 
 	@Setter

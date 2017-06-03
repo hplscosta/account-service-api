@@ -51,22 +51,4 @@ public class AccountTests {
 		assertThat( account.getUser() ).isEqualTo( "user" );
 		assertThat( account.getName() ).isEqualTo( "name" );
 	}
-
-	/**
-	 * Invalid account creation: missing user <br>
-	 * Negative test.
-	 */
-	@Test( expected = NullPointerException.class )
-	public void invalid_account_missing_user() {
-		new Account( null, "name" );
-	}
-
-	/**
-	 * Invalid account creation: missing name <br>
-	 * Negative test.
-	 */
-	@Test( expected = NullPointerException.class )
-	public void invalid_account_missing_name() {
-		new Account( "user", null );
-	}
 }
