@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AccountRepositoryTests {
 
 	@Autowired
-	AccountRepository repository;
+	private AccountRepository repository;
 
 	/**
 	 * Insert a new account in repository<br>
@@ -41,9 +41,10 @@ public class AccountRepositoryTests {
 		// given
 		Account account = new Account( "user", "name" );
 
+		// when
 		Account accountInserted = repository.insert( account );
 
-		// asserts
+		// then
 		assertThat( account ).isEqualToComparingFieldByField( accountInserted );
 	}
 
@@ -59,9 +60,10 @@ public class AccountRepositoryTests {
 		Account account = new Account( "user", "name" );
 		repository.insert( account );
 
+		// when
 		Account accountLocated = repository.findOne( "user" );
 
-		// asserts
+		// then
 		assertThat( account ).isEqualToComparingFieldByField( accountLocated );
 	}
 
@@ -79,9 +81,10 @@ public class AccountRepositoryTests {
 		Account account3 = new Account( "user3", "name3" );
 		repository.insert( Arrays.asList( account1, account2, account3 ) );
 
+		// when
 		List<Account> accounts = repository.findAll();
 
-		// asserts
+		// then
 		assertThat( accounts ).hasSize( 3 ).contains( account1, account2, account3 );
 	}
 
@@ -97,6 +100,7 @@ public class AccountRepositoryTests {
 		Account account1 = new Account( "user1", "name1" );
 		Account account2 = new Account( "user1", "name2" );
 
+		// when
 		repository.insert( Arrays.asList( account1, account2 ) );
 	}
 }
