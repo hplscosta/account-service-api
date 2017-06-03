@@ -1,7 +1,11 @@
 spring:
   application:
     name: account-persistence-api
+  data:
+    mongodb:
+      host: localhost
+      port: 0
+      database: demo
 
 server:
   port: 8080
-
