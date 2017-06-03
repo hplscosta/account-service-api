@@ -1,5 +1,6 @@
 package com.demo.account.persistence.api.account;
 
+import com.demo.account.persistence.api.account.exception.AccountNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,6 +8,7 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -88,15 +90,32 @@ public class AccountServiceTests {
 	public void valid_find_account() {
 
 		// given
-		Account account = new Account( "user", "name" );
-		given( repository.findOne( account.getUser() ) ).willReturn( account );
+		String user = "user";
+		Optional<Account> account = Optional.of( new Account( user, "name" ) );
+		given( repository.findAccountByUser( user ) ).willReturn( account );
 
 		// when
-		Account accountLocated = service.find( account.getUser() );
+		Account accountLocated = service.find( user );
 
 		// then
-		then( repository ).should().findOne( account.getUser() );
-		assertThat( accountLocated ).isEqualToComparingFieldByField( account );
+		then( repository ).should().findAccountByUser( user );
+		assertThat( accountLocated ).isEqualToComparingFieldByField( account.get() );
+	}
+
+	/**
+	 * Calling service to find an account that not exists.<br>
+	 * Negative test.
+	 */
+	@Test( expected = AccountNotFoundException.class )
+	public void valid_find_account_missing() {
+
+		// given
+		String user = "user";
+		Optional<Account> account = Optional.empty();
+		given( repository.findAccountByUser( user ) ).willReturn( account );
+
+		// when
+		service.find( user );
 	}
 
 	/**
