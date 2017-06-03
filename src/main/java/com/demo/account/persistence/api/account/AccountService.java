@@ -1,11 +1,13 @@
 package com.demo.account.persistence.api.account;
 
+import com.demo.account.persistence.api.account.exception.AccountNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Account service to validate accounts and interacts with persistence layer. <br>
@@ -43,7 +45,8 @@ public class AccountService {
 	public Account find( String user ) {
 		Assert.hasText( user, "User cannot be empty." );
 		log.info( "Looking for user {}", user );
-		return repository.findOne( user );
+		Optional<Account> account = repository.findAccountByUser( user );
+		return account.orElseThrow( () -> new AccountNotFoundException( user ) );
 	}
 
 	/**
