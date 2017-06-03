@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: account-persistence-api
+
+server:
+  port: 8080
+
