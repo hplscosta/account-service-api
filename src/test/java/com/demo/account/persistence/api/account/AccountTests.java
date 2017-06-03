@@ -28,7 +28,7 @@ public class AccountTests {
 		account.setAge( 10 );
 		account.setAddress( new Address( "city", "country" ) );
 
-		//then
+		// asserts
 		assertThat( account.getUser() ).isEqualTo( "user" );
 		assertThat( account.getName() ).isEqualTo( "name" );
 		assertThat( account.getAge() ).isEqualTo( 10 );
@@ -47,7 +47,7 @@ public class AccountTests {
 		// given
 		Account account = new Account( "user", "name" );
 
-		//then
+		// asserts
 		assertThat( account.getUser() ).isEqualTo( "user" );
 		assertThat( account.getName() ).isEqualTo( "name" );
 	}
