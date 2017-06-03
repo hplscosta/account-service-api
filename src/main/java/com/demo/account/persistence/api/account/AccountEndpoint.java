@@ -1,4 +1,4 @@
-package com.demo.account.persistence.api;
+package com.demo.account.persistence.api.account;
 
 import com.demo.account.persistence.api.account.Account;
 import com.demo.account.persistence.api.account.AccountService;
@@ -26,7 +26,7 @@ public class AccountEndpoint {
 
 	private final AccountService service;
 
-	@GetMapping( path = "/{id}" )
+	@GetMapping( path = "/{user}" )
 	public ResponseEntity<Account> get( @PathVariable String user ) {
 		return ResponseEntity.ok( service.find( user ) );
 	}
