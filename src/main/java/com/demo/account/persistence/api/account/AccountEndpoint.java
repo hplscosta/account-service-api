@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 /**
  * Account endpoint to access {@link Account} data. <br>
@@ -34,5 +34,15 @@ public class AccountEndpoint {
 	@GetMapping
 	public ResponseEntity<List<Account>> get() {
 		return ResponseEntity.ok( service.findAll() );
+	}
+
+	@PostMapping
+	public ResponseEntity<Account> create( @RequestBody Account account ) {
+		Account inserted = service.insert( account );
+		return ResponseEntity.created( createLocation( inserted.getUser() ) ).body( account );
+	}
+
+	private URI createLocation( String id ) {
+		return URI.create( linkTo( AccountEndpoint.class ).slash( id ).withSelfRel().getHref() );
 	}
 }
