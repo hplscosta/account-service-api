@@ -1,5 +1,7 @@
 package com.demo.account.persistence.api.account;
 
+import com.demo.account.persistence.api.account.exception.AccountEndpointAdvice.ErrorMessage;
+import com.demo.account.persistence.api.account.exception.AccountNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,5 +73,26 @@ public class AccountEndpointTests {
 		assertThat( accountLocated ).isEqualToComparingFieldByField( account );
 	}
 
+	/**
+	 * Calling endpoint to get account. Account does not exist. Must return an error message.<br>
+	 * Negative test.
+	 */
+	@Test
+	public void invalid_get_account_missing() throws Exception {
 
+		// given
+		String user = "user";
+		given( service.find( user ) ).willThrow( new AccountNotFoundException( user ) );
+
+		// when
+		//@formatter:off
+		MvcResult result = this.mockMvc.perform( get( "/account/{user}", user ).contentType( MediaType.APPLICATION_JSON ) )
+			.andExpect( status().isNotFound() ).andReturn();
+		//@formatter:on
+
+		// then
+		then( service ).should().find( user );
+		ErrorMessage errorMessage = mapper.readValue( result.getResponse().getContentAsString(), ErrorMessage.class );
+		assertThat( errorMessage ).isEqualTo( new ErrorMessage( "Account not found. User: user" ) );
+	}
 }
