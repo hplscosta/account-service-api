@@ -1,6 +1,6 @@
 spring:
   application:
-    name: account-persistence-api
+    name: account-service-api
   data:
     mongodb:
       host: localhost
