@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AccountPersistenceApiApplication {
+public class AccountServiceApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AccountPersistenceApiApplication.class, args);
+		SpringApplication.run( AccountServiceApiApplication.class, args);
 	}
 }
