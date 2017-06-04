@@ -1,4 +1,4 @@
-package com.demo.account.persistence.api.config;
+package com.demo.account.service.api.config;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;

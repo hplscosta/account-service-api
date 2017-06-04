@@ -1,6 +1,6 @@
-package com.demo.account.persistence.api.account;
+package com.demo.account.service.api.account;
 
-import com.demo.account.persistence.api.config.MongoConfigTests;
+import com.demo.account.service.api.config.MongoConfigTests;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

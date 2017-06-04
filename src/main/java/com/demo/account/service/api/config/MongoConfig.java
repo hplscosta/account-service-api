@@ -1,6 +1,6 @@
-package com.demo.account.persistence.api.config;
+package com.demo.account.service.api.config;
 
-import com.demo.account.persistence.api.account.AccountRepository;
+import com.demo.account.service.api.account.AccountRepository;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 

@@ -1,6 +1,6 @@
-package com.demo.account.persistence.api.account;
+package com.demo.account.service.api.account;
 
-import com.demo.account.persistence.api.account.exception.AccountNotFoundException;
+import com.demo.account.service.api.account.exception.AccountNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.demo.account.persistence.api.account;
+package com.demo.account.service.api.account;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

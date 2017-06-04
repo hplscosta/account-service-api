@@ -1,4 +1,4 @@
-package com.demo.account.persistence.api.account.exception;
+package com.demo.account.service.api.account.exception;
 
 import lombok.Getter;
 

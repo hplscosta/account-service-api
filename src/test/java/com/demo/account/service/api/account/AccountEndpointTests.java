@@ -1,7 +1,7 @@
-package com.demo.account.persistence.api.account;
+package com.demo.account.service.api.account;
 
-import com.demo.account.persistence.api.account.exception.AccountEndpointAdvice.ErrorMessage;
-import com.demo.account.persistence.api.account.exception.AccountNotFoundException;
+import com.demo.account.service.api.account.exception.AccountEndpointAdvice.ErrorMessage;
+import com.demo.account.service.api.account.exception.AccountNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;

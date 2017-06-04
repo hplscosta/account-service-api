@@ -1,6 +1,6 @@
-package com.demo.account.persistence.api.account;
+package com.demo.account.service.api.account;
 
-import com.demo.account.persistence.api.account.exception.AccountNotFoundException;
+import com.demo.account.service.api.account.exception.AccountNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
